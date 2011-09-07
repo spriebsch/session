@@ -126,8 +126,12 @@ abstract class AbstractSession implements SessionInterface
         if ($this->isStarted()) {
             throw new SessionException('Session has already been started');
         }
+        
+        if ($name == '') {
+            throw new SessionException('Session name must not be empty');
+        }
+        $this->name = $name;
 
-        $this->setName($name);
         $this->backend->startSession($name);
         $this->data = $this->backend->read();
         $this->isStarted = TRUE;
@@ -209,20 +213,5 @@ abstract class AbstractSession implements SessionInterface
         if (!$this->isStarted()) {
             throw new SessionException('Session has not been started');
         }
-    }
-
-    /**
-     * Sets the session name
-     *
-     * @param string $name
-     * @return NULL
-     */
-    final protected function setName($name)
-    {
-        if ($name == '') {
-            throw new SessionException('Session name required');
-        }
-    
-        $this->name = $name;
     }
 }

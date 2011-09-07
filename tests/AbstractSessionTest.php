@@ -177,7 +177,6 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * Makes sure that an exception is thrown when starting a session with empty name
      *
      * @covers spriebsch\session\AbstractSession::start
-     * @covers spriebsch\session\AbstractSession::setName
      * @expectedException spriebsch\session\SessionException
      */
     public function testStartThrowsExceptionWhenNameIsEmpty()
@@ -189,7 +188,6 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * Makes sure that exception is thrown by start() when session is already started
      *
      * @covers spriebsch\session\AbstractSession::start
-     * @covers spriebsch\session\AbstractSession::setName
      * @depends testStartStartsSessionInBackend
      * @expectedException spriebsch\session\SessionException
      */
@@ -202,7 +200,6 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * Starts a session and make sure that session data is read from the backend
      *
      * @covers spriebsch\session\AbstractSession::start
-     * @covers spriebsch\session\AbstractSession::setName
      */
     public function testStartReadsDataFromBackend()
     {
