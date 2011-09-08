@@ -143,10 +143,6 @@ abstract class AbstractSession implements SessionInterface
         if (!$this->isConfigured) {
             throw new SessionException('Session has not been configured', SessionException::SESSION_ALREADY_STARTED);
         }
-        
-        if ($this->name == '') {
-            throw new SessionException('Session name must not be empty', SessionException::EMPTY_SESSION_NAME);
-        }
 
         $this->backend->startSession($this->name, $this->lifetime, $this->path, $this->domain, $this->isSecure, TRUE);
         $this->data = $this->backend->read();
