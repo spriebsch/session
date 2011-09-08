@@ -176,6 +176,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * Makes sure that start() starts a session in the backend
      *
      * @covers spriebsch\session\AbstractSession::start
+     * @covers spriebsch\session\AbstractSession::configure
      */
     public function testStartStartsSessionInBackend()
     {
@@ -205,6 +206,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * Starts a session and make sure that session data is read from the backend
      *
      * @covers spriebsch\session\AbstractSession::start
+     * @covers spriebsch\session\AbstractSession::configure
      */
     public function testStartReadsDataFromBackend()
     {
@@ -248,6 +250,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * getSessionId().
      *
      * @covers spriebsch\session\AbstractSession::getId
+     * @covers spriebsch\session\AbstractSession::configure
      */
     public function testGetIdRetrievesSessionIdFromBackend()
     {
