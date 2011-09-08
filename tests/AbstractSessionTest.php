@@ -191,6 +191,41 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Makes sure that configure() throws an exception when session is already started
+     *
+     * @covers spriebsch\session\AbstractSession::configure
+     * @expectedException spriebsch\session\SessionException
+     */
+    public function testConfigureThrowsExceptionWhenSessionIsAlreadyStarted()
+    {
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+    }
+
+    /**
+     * Makes sure that configure() throws an exception when session name is missing
+     *
+     * @covers spriebsch\session\AbstractSession::configure
+     * @expectedException spriebsch\session\SessionException
+     */
+    public function testConfigureThrowsExceptionWhenSessionNameIsEmpty()
+    {
+        $this->session->configure(NULL, $this->sessionDomain);
+    }
+
+    /**
+     * Makes sure that configure() throws an exception when isSecure is not a boolean
+     *
+     * @covers spriebsch\session\AbstractSession::configure
+     * @expectedException spriebsch\session\SessionException
+     */
+    public function testConfigureThrowsExceptionWhenIsSecureIsNotABoolean()
+    {
+        $this->session->configure($this->sessionName, $this->sessionDomain, '/', 300, 'not-a-boolean');
+    }
+
+    /**
      * Makes sure that exception is thrown by start() when session is already started
      *
      * @covers spriebsch\session\AbstractSession::start
