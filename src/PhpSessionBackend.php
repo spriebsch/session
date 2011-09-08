@@ -45,9 +45,26 @@ namespace spriebsch\session;
  */
 class PhpSessionBackend implements SessionBackendInterface
 {
-    public function startSession($name)
+    /**
+     * @var string
+     */
+    protected $name;
+    protected $lifetime;
+    protected $path;
+    protected $domain;
+    protected $isSecure;
+    protected $isHttpOnly;
+
+    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE, $isHttpOnly = TRUE)
     {
-        session_set_cookie_params(360, '/', '.example.com', FALSE, TRUE);
+        $this->name = $name;
+        $this->lifetime = $lifetime;
+        $this->path = $path;
+        $this->domain = $domain;
+        $this->isSecure = $isSecure;
+        $this->isHttpOnly = $isHttpOnly;
+
+        session_set_cookie_params($lifetime, $path, $domain, $isSecure, $isHttpOnly);
         session_name($name);
         session_start();
     }
@@ -74,7 +91,7 @@ class PhpSessionBackend implements SessionBackendInterface
 
     public function destroy()
     {
-        setcookie(session_name(), '', 1, '/', '.example.com', FALSE, TRUE);
+        setcookie($this->name, '', 1, $this->path, $this->domain, $this->isSecure, $this->isHttpOnly);
         session_destroy();
         unset($_SESSION);
     }

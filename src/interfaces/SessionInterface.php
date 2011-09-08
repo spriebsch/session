@@ -45,7 +45,7 @@ namespace spriebsch\session;
  */
 interface SessionInterface
 {
-    public function start($name);
+    public function start();
     public function isStarted();
     public function getId();
     public function getName();

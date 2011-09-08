@@ -58,12 +58,42 @@ abstract class AbstractSession implements SessionInterface
     /**
      * @var bool
      */
-    private $isStarted = false;
+    private $isConfigured = FALSE;
+
+    /**
+     * @var bool
+     */
+    private $isStarted = FALSE;
 
     /**
      * @var SessionBackend
      */
     private $backend;
+
+    /**
+     * @var int
+     */
+    protected $lifetime = 300;
+
+    /**
+     * @var string
+     */
+    protected $path = '/';
+
+    /**
+     * @var string
+     */
+    protected $domain;
+
+    /**
+     * @var bool
+     */
+    protected $isSecure = FALSE;
+
+    /**
+     * @var bool
+     */
+    protected $isHttpOnly = TRUE;
 
     /**
      * Constructs the object
@@ -74,6 +104,63 @@ abstract class AbstractSession implements SessionInterface
     public function __construct(SessionBackendInterface $backend)
     {
         $this->backend = $backend;
+    }
+    
+    public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE, $isHttpOnly = TRUE)
+    {
+        if ($this->isStarted()) {
+            throw new SessionException('Session has already been started', SessionException::SESSION_ALREADY_STARTED);
+        }
+
+        if ($name == '') {
+            throw new SessionException('Session name must not be empty', SessionException::EMPTY_SESSION_NAME);
+        }
+
+        if (!is_bool($isSecure)) {
+            throw new SessionException('Boolean value expected', SessionException::BOOLEAN_VALUE_EXPECTED);
+        }
+
+        if (!is_bool($isHttpOnly)) {
+            throw new SessionException('Boolean value expected', SessionException::BOOLEAN_VALUE_EXPECTED);
+        }
+
+        $this->name = $name;
+        $this->lifetime = $lifetime;
+        $this->path = $path;
+        $this->domain = $domain;
+        $this->isSecure = $isSecure;
+        $this->isHttpOnly = $isHttpOnly;
+        
+        $this->isConfigured = TRUE;
+    }
+
+    /**
+     * Starts the sesssion
+     *
+     * @return NULL
+     * @throws spriebsch\session\SessionException Session has already been started
+     */
+    final public function start()
+    {
+        if ($this->isStarted()) {
+            throw new SessionException('Session has already been started', SessionException::SESSION_ALREADY_STARTED);
+        }
+
+        if (!$this->isConfigured) {
+            throw new SessionException('Session has not been configured', SessionException::SESSION_ALREADY_STARTED);
+        }
+        
+        if ($this->name == '') {
+            throw new SessionException('Session name must not be empty', SessionException::EMPTY_SESSION_NAME);
+        }
+
+        if ($this->domain == '') {
+            throw new SessionException('Cookie domain must not be empty', SessionException::EMPTY_COOKIE_DOMAIN);
+        }
+
+        $this->backend->startSession($this->name, 300, '/', '.example.com');
+        $this->data = $this->backend->read();
+        $this->isStarted = TRUE;
     }
 
     /**
@@ -98,7 +185,7 @@ abstract class AbstractSession implements SessionInterface
     final protected function get($key)
     {
         if (!isset($this->data[$key])) {
-            throw new SessionException('Unknown session variable "' . $key . '"');
+            throw new SessionException('Unknown session variable "' . $key . '"', SessionException::UNKNOWN_SESSION_VARIABLE);
         }
 
         return $this->data[$key];
@@ -115,28 +202,6 @@ abstract class AbstractSession implements SessionInterface
         return isset($this->data[$key]);
     }
     
-    /**
-     * Starts the sesssion
-     *
-     * @return NULL
-     * @throws spriebsch\session\SessionException Session has already been started
-     */
-    final public function start($name)
-    {
-        if ($this->isStarted()) {
-            throw new SessionException('Session has already been started');
-        }
-        
-        if ($name == '') {
-            throw new SessionException('Session name must not be empty');
-        }
-        $this->name = $name;
-
-        $this->backend->startSession($name);
-        $this->data = $this->backend->read();
-        $this->isStarted = TRUE;
-    }
-
     /**
      * Checks whether the session has already been started
      *
@@ -211,7 +276,7 @@ abstract class AbstractSession implements SessionInterface
     protected function ensureSessionIsStarted()
     {
         if (!$this->isStarted()) {
-            throw new SessionException('Session has not been started');
-        }
+            throw new SessionException('Session has already been started', SessionException::SESSION_NOT_STARTED);
+       }
     }
 }

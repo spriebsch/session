@@ -66,7 +66,11 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      * @var string
      */    
     protected $sessionName = 'a-session-name';
-    
+
+    /**
+     * @var string
+     */    
+    protected $sessionDomain = '.example.com';
     /**
      * @var string
      */    
@@ -158,6 +162,17 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Makes sure that an exception is thrown when starting a session that is not configured
+     *
+     * @covers spriebsch\session\AbstractSession::start
+     * @expectedException spriebsch\session\SessionException
+     */
+    public function testStartThrowsExceptionWhenSessionNotConfigured()
+    {
+        $this->session->start();
+    }
+
+    /**
      * Makes sure that start() starts a session in the backend
      *
      * @covers spriebsch\session\AbstractSession::start
@@ -166,22 +181,12 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     {
         $this->backend->expects($this->once())
                       ->method('startSession')
-                      ->with($this->sessionName);
+                      ->with($this->sessionName, 300, '/', '.example.com');
     
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
         
         return $this->session;
-    }
-
-    /**
-     * Makes sure that an exception is thrown when starting a session with empty name
-     *
-     * @covers spriebsch\session\AbstractSession::start
-     * @expectedException spriebsch\session\SessionException
-     */
-    public function testStartThrowsExceptionWhenNameIsEmpty()
-    {
-        $this->session->start('');
     }
 
     /**
@@ -193,7 +198,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      */
     public function testStartThrowsExceptionWhenSessionIsAlreadyStarted(ConcreteSession $session)
     {
-        $session->start($this->sessionName);
+        $session->start();
     }
 
     /**
@@ -208,7 +213,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
                       ->with()
                       ->will($this->returnValue(array('foo' => $this->value)));
 
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
 
         $this->assertEquals($this->value, $this->session->getFoo());
     }
@@ -249,7 +255,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
                       ->method('getSessionId')
                       ->will($this->returnValue($this->sessionId));
 
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
 
         $this->assertEquals($this->sessionId, $this->session->getId());
     }
@@ -259,7 +266,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetNameReturnsSessionName()
     {
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
 
         $this->assertEquals($this->sessionName, $this->session->getName());
     }
@@ -283,7 +291,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
         $this->backend->expects($this->once())
                       ->method('regenerateSessionId');
 
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
         $this->session->regenerateId();
         
         return $this->session;
@@ -303,7 +312,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
                       ->method('getSessionId')
                       ->will($this->returnValue($this->newSessionId));
 
-        $this->session->start($this->sessionName);
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start();
         
         $this->assertEquals($this->newSessionId, $this->session->regenerateId());
     }
@@ -322,7 +332,8 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
      */
     public function testCommitWritesSessionData()
     {
-        $this->session->start($this->sessionName); 
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start(); 
         
         $this->session->setFoo('a-value');    
 
@@ -341,13 +352,14 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     {
         $this->session->destroy();
     }
-    
+
     /**
      * @covers spriebsch\session\AbstractSession::destroy
      */
     public function testDestroyCallsDestroyInBackend()
     {
-        $this->session->start($this->sessionName); 
+        $this->session->configure($this->sessionName, $this->sessionDomain);
+        $this->session->start(); 
         
         $this->session->setFoo('a-value');    
 
