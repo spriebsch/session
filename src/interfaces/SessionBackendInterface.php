@@ -45,7 +45,7 @@ namespace spriebsch\session;
  */
 interface SessionBackendInterface
 {
-    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE, $isHttpOnly = TRUE);
+    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE);
     public function getSessionId();
     public function regenerateSessionId();
     public function read();

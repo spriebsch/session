@@ -53,18 +53,16 @@ class PhpSessionBackend implements SessionBackendInterface
     protected $path;
     protected $domain;
     protected $isSecure;
-    protected $isHttpOnly;
 
-    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE, $isHttpOnly = TRUE)
+    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE)
     {
         $this->name = $name;
         $this->lifetime = $lifetime;
         $this->path = $path;
         $this->domain = $domain;
         $this->isSecure = $isSecure;
-        $this->isHttpOnly = $isHttpOnly;
 
-        session_set_cookie_params($lifetime, $path, $domain, $isSecure, $isHttpOnly);
+        session_set_cookie_params($lifetime, $path, $domain, $isSecure, TRUE);
         session_name($name);
         session_start();
     }
@@ -91,7 +89,7 @@ class PhpSessionBackend implements SessionBackendInterface
 
     public function destroy()
     {
-        setcookie($this->name, '', 1, $this->path, $this->domain, $this->isSecure, $this->isHttpOnly);
+        setcookie($this->name, '', 1, $this->path, $this->domain, $this->isSecure, TRUE);
         session_destroy();
         unset($_SESSION);
     }

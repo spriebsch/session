@@ -91,11 +91,6 @@ abstract class AbstractSession implements SessionInterface
     protected $isSecure = FALSE;
 
     /**
-     * @var bool
-     */
-    protected $isHttpOnly = TRUE;
-
-    /**
      * Constructs the object
      *
      * @param SessionBackendInterface $backend
@@ -106,7 +101,7 @@ abstract class AbstractSession implements SessionInterface
         $this->backend = $backend;
     }
     
-    public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE, $isHttpOnly = TRUE)
+    public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE)
     {
         if ($this->isStarted()) {
             throw new SessionException('Session has already been started', SessionException::SESSION_ALREADY_STARTED);
@@ -120,16 +115,11 @@ abstract class AbstractSession implements SessionInterface
             throw new SessionException('Boolean value expected', SessionException::BOOLEAN_VALUE_EXPECTED);
         }
 
-        if (!is_bool($isHttpOnly)) {
-            throw new SessionException('Boolean value expected', SessionException::BOOLEAN_VALUE_EXPECTED);
-        }
-
         $this->name = $name;
         $this->lifetime = $lifetime;
         $this->path = $path;
         $this->domain = $domain;
         $this->isSecure = $isSecure;
-        $this->isHttpOnly = $isHttpOnly;
         
         $this->isConfigured = TRUE;
     }
@@ -158,7 +148,7 @@ abstract class AbstractSession implements SessionInterface
             throw new SessionException('Cookie domain must not be empty', SessionException::EMPTY_COOKIE_DOMAIN);
         }
 
-        $this->backend->startSession($this->name, 300, '/', '.example.com');
+        $this->backend->startSession($this->name, $this->lifetime, $this->path, $this->domain, $this->isSecure, TRUE);
         $this->data = $this->backend->read();
         $this->isStarted = TRUE;
     }
