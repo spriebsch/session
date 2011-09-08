@@ -45,4 +45,10 @@ namespace spriebsch\session;
  */
 class SessionException extends \Exception
 {
+    const SESSION_ALREADY_STARTED = 0;
+    const EMPTY_SESSION_NAME = 1;
+    const EMPTY_COOKIE_DOMAIN = 2;
+    const BOOLEAN_VALUE_EXPECTED = 3;
+    const UNKNOWN_SESSION_VARIABLE = 4;
+    const SESSION_NOT_STARTED = 5;
 }
