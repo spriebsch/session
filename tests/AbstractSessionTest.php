@@ -215,6 +215,17 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Makes sure that configure() throws an exception when cookie domain is missing
+     *
+     * @covers spriebsch\session\AbstractSession::configure
+     * @expectedException spriebsch\session\SessionException
+     */
+    public function testConfigureThrowsExceptionWhenCookieDomainIsEmpty()
+    {
+        $this->session->configure($this->sessionName, NULL);
+    }
+
+    /**
      * Makes sure that configure() throws an exception when isSecure is not a boolean
      *
      * @covers spriebsch\session\AbstractSession::configure
