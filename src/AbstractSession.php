@@ -111,6 +111,10 @@ abstract class AbstractSession implements SessionInterface
             throw new SessionException('Session name must not be empty', SessionException::EMPTY_SESSION_NAME);
         }
 
+        if ($domain == '') {
+            throw new SessionException('Cookie domain must not be empty', SessionException::EMPTY_COOKIE_DOMAIN);
+        }
+
         if (!is_bool($isSecure)) {
             throw new SessionException('Boolean value expected', SessionException::BOOLEAN_VALUE_EXPECTED);
         }
@@ -142,10 +146,6 @@ abstract class AbstractSession implements SessionInterface
         
         if ($this->name == '') {
             throw new SessionException('Session name must not be empty', SessionException::EMPTY_SESSION_NAME);
-        }
-
-        if ($this->domain == '') {
-            throw new SessionException('Cookie domain must not be empty', SessionException::EMPTY_COOKIE_DOMAIN);
         }
 
         $this->backend->startSession($this->name, $this->lifetime, $this->path, $this->domain, $this->isSecure, TRUE);
