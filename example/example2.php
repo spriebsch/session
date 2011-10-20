@@ -14,7 +14,7 @@ class Session extends spriebsch\session\AbstractSession
         if (!$this->has('counter')) {
             $this->set('counter', 0);
         }
-    
+
         $this->set('counter', $this->get('counter') + 1);
     }
 }

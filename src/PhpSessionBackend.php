@@ -54,7 +54,7 @@ class PhpSessionBackend implements SessionBackendInterface
     protected $domain;
     protected $isSecure;
 
-    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE)
+    public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE, $httpOnly = TRUE)
     {
         $this->name = $name;
         $this->lifetime = $lifetime;
@@ -62,16 +62,16 @@ class PhpSessionBackend implements SessionBackendInterface
         $this->domain = $domain;
         $this->isSecure = $isSecure;
 
-        session_set_cookie_params($lifetime, $path, $domain, $isSecure, TRUE);
+        session_set_cookie_params($lifetime, $path, $domain, $isSecure, $httpOnly);
         session_name($name);
         session_start();
     }
-    
+
     public function getSessionId()
     {
         return session_id();
     }
-    
+
     public function regenerateSessionId()
     {
         session_regenerate_id(TRUE);
