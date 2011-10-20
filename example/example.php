@@ -11,12 +11,12 @@ class Session extends AbstractSession
     {
         $this->set('user', $user);
     }
-    
+
     public function hasUser()
     {
         return $this->has('user');
     }
-    
+
     public function getUser()
     {
         return $this->get('user');

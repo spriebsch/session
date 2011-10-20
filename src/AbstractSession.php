@@ -100,7 +100,7 @@ abstract class AbstractSession implements SessionInterface
     {
         $this->backend = $backend;
     }
-    
+
     public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE)
     {
         if ($this->isStarted()) {
@@ -124,7 +124,7 @@ abstract class AbstractSession implements SessionInterface
         $this->path = $path;
         $this->domain = $domain;
         $this->isSecure = $isSecure;
-        
+
         $this->isConfigured = TRUE;
     }
 
@@ -187,7 +187,7 @@ abstract class AbstractSession implements SessionInterface
     {
         return isset($this->data[$key]);
     }
-    
+
     /**
      * Checks whether the session has already been started
      *

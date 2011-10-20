@@ -55,7 +55,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
      * @var spriebsch\session\SessionBackendInterface
      */
     protected $backend;
-    
+
     protected $sessionName = 'a-session-name';
 
     /**
@@ -92,7 +92,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
     public function testStartSessionSetsSessionName()
     {
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
-        
+
         $this->assertEquals($this->sessionName, session_name());
     }
 
@@ -103,7 +103,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
     {
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
 
-        $this->assertTrue(isset($_SESSION));        
+        $this->assertTrue(isset($_SESSION));
         $this->assertNotEmpty(session_id());
     }
 
@@ -115,7 +115,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         if (!in_array('xdebug', get_loaded_extensions())) {
             $this->markTestSkipped('xdebug not available');
         }
-    
+
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
 
         $headers = xdebug_get_headers();
@@ -130,7 +130,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
     public function testGetSessionIdReturnsSessionId()
     {
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
-        
+
         $this->assertEquals(session_id(), $this->backend->getSessionId());
     }
 
@@ -142,7 +142,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
         $id = $this->backend->getSessionId();
         $this->backend->regenerateSessionId();
-        
+
         $this->assertNotEquals(session_id(), $id);
     }
 
@@ -156,7 +156,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('foo' => 'a-foo'), $this->backend->read());
     }
-    
+
     /**
      * @covers spriebsch\session\PhpSessionBackend::write
      */
@@ -166,7 +166,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         $this->backend->write(array('foo' => 'another-foo'));
 
         $this->assertEquals(array('foo' => 'another-foo'), $_SESSION);
-    }    
+    }
 
     /**
      * @covers spriebsch\session\PhpSessionBackend::destroy
@@ -177,7 +177,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         $this->backend->destroy();
 
         $this->assertEmpty(session_id());
-    }    
+    }
 
     /**
      * @covers spriebsch\session\PhpSessionBackend::destroy
@@ -188,7 +188,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         $this->backend->destroy();
 
         $this->assertFalse(isset($_SESSION));
-    }    
+    }
 
     /**
      * @covers spriebsch\session\PhpSessionBackend::destroy
@@ -198,7 +198,7 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
         if (!in_array('xdebug', get_loaded_extensions())) {
             $this->markTestSkipped('xdebug not available');
         }
-    
+
         $this->backend->startSession($this->sessionName, 300, '/', '.example.com');
         $this->backend->destroy();
 
