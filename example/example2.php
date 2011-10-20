@@ -1,6 +1,6 @@
 <?php
 
-require '/home/steve/projects/session/src/autoload.php';
+require __DIR__ . '/../src/autoload.php';
 
 class Session extends spriebsch\session\AbstractSession
 {
@@ -14,7 +14,7 @@ class Session extends spriebsch\session\AbstractSession
         if (!$this->has('counter')) {
             $this->set('counter', 0);
         }
-    
+
         $this->set('counter', $this->get('counter') + 1);
     }
 }
