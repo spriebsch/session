@@ -49,11 +49,37 @@ class PhpSessionBackend implements SessionBackendInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var int
+     */
     protected $lifetime;
+
+    /**
+     * @var string
+     */
     protected $path;
+
+    /**
+     * @var string
+     */
     protected $domain;
+
+    /**
+     * @var bool
+     */
     protected $isSecure;
 
+    /**
+     * Starts the session
+     *
+     * @param string $name Session name
+     * @param string $domain Session cookie domain
+     * @param string $path Session cookie path
+     * @param int $lifetime Session cookie lifetime
+     * @param bool $isSecure Whether session is HTTPS or HTTP
+     * @return NULL
+     */
     public function startSession($name, $lifetime, $path, $domain, $isSecure = FALSE)
     {
         $this->name = $name;
