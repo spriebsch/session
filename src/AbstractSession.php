@@ -101,6 +101,16 @@ abstract class AbstractSession implements SessionInterface
         $this->backend = $backend;
     }
     
+    /**
+     * Configures the session
+     *
+     * @param string $name Session name
+     * @param string $domain Session cookie domain
+     * @param string $path Session cookie path
+     * @param int $lifetime Session cookie lifetime
+     * @param bool $isSecure Whether session is HTTPS or HTTP
+     * @return NULL
+     */
     public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE)
     {
         if ($this->isStarted()) {
