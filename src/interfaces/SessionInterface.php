@@ -45,6 +45,7 @@ namespace spriebsch\session;
  */
 interface SessionInterface
 {
+    public function configure($name, $domain, $path = '/', $lifetime = 300, $isSecure = FALSE);
     public function start();
     public function isStarted();
     public function getId();
