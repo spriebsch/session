@@ -151,7 +151,7 @@ abstract class AbstractSession implements SessionInterface
         }
 
         if (!$this->isConfigured) {
-            throw new SessionException('Session has not been configured', SessionException::SESSION_ALREADY_STARTED);
+            throw new SessionException('Session has not been configured', SessionException::SESSION_NOT_CONFIGURED);
         }
 
         $this->backend->startSession($this->name, $this->lifetime, $this->path, $this->domain, $this->isSecure, TRUE);
@@ -180,7 +180,7 @@ abstract class AbstractSession implements SessionInterface
      */
     final protected function get($key)
     {
-        if (!isset($this->data[$key])) {
+        if (!$this->has($key)) {
             throw new SessionException('Unknown session variable "' . $key . '"', SessionException::UNKNOWN_SESSION_VARIABLE);
         }
 
@@ -272,7 +272,7 @@ abstract class AbstractSession implements SessionInterface
     protected function ensureSessionIsStarted()
     {
         if (!$this->isStarted()) {
-            throw new SessionException('Session has already been started', SessionException::SESSION_NOT_STARTED);
+            throw new SessionException('Session has not been started', SessionException::SESSION_NOT_STARTED);
        }
     }
 }

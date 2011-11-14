@@ -51,4 +51,5 @@ class SessionException extends \Exception
     const BOOLEAN_VALUE_EXPECTED = 3;
     const UNKNOWN_SESSION_VARIABLE = 4;
     const SESSION_NOT_STARTED = 5;
+    const SESSION_NOT_CONFIGURED = 5;
 }
