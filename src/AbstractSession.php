@@ -147,7 +147,7 @@ abstract class AbstractSession implements SessionInterface
      * @return NULL
      * @throws spriebsch\session\SessionException Session has already been started
      */
-    final public function start()
+    public function start()
     {
         if ($this->isStarted()) {
             throw new SessionException('Session has already been started', SessionException::SESSION_ALREADY_STARTED);
@@ -167,7 +167,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return string
      */
-    final public function getId()
+    public function getId()
     {
         $this->ensureSessionIsStarted();
         return $this->backend->getSessionId();
@@ -178,7 +178,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return string
      */
-    final public function getName()
+    public function getName()
     {
         return $this->name;
     }
@@ -188,7 +188,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return string new session id
      */
-    final public function regenerateId()
+    public function regenerateId()
     {
         $this->ensureSessionIsStarted();
         $this->backend->regenerateSessionId();
@@ -200,7 +200,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return NULL
      */
-    final public function commit()
+    public function commit()
     {
         $this->ensureSessionIsStarted();
         $this->backend->write($this->data);
@@ -211,7 +211,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return NULL
      */
-    final public function destroy()
+    public function destroy()
     {
         $this->ensureSessionIsStarted();
         $this->backend->destroy();
@@ -261,7 +261,7 @@ abstract class AbstractSession implements SessionInterface
      *
      * @return bool
      */
-    private function isStarted()
+    final protected function isStarted()
     {
         return $this->isStarted;
     }
@@ -272,7 +272,7 @@ abstract class AbstractSession implements SessionInterface
      * @return NULL
      * @throws spriebsch\session\SessionException
      */
-    private function ensureSessionIsStarted()
+    final protected function ensureSessionIsStarted()
     {
         if (!$this->isStarted()) {
             throw new SessionException('Session has not been started', SessionException::SESSION_NOT_STARTED);

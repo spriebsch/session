@@ -119,16 +119,6 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Makes sure that session is not started by default
-     *
-     * @covers spriebsch\session\AbstractSession::isStarted
-     */
-    public function testIsStartedInitiallyReturnsFalse()
-    {
-        $this->assertFalse($this->session->isStarted());
-    }
-
-    /**
      * Makes sure that an exception is thrown when getting data is not set
      *
      * @covers spriebsch\session\AbstractSession::get
@@ -265,17 +255,6 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
         $this->session->start();
 
         $this->assertEquals($this->value, $this->session->getFoo());
-    }
-
-    /**
-     * Makes sure that isStarted() returns TRUE when the session is started
-     *
-     * @covers spriebsch\session\AbstractSession::isStarted
-     * @depends testStartStartsSessionInBackend
-     */
-    public function testIsStartedReturnsTrueWhenSessionIsStarted(ConcreteSession $session)
-    {
-        $this->assertTrue($session->isStarted());
     }
 
     /**
