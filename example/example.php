@@ -27,6 +27,9 @@ class User
 {
 }
 
+var_dump(AbstractSession::VERSION);
+var_dump(AbstractSession::API_VERSION);
+
 $backend = new PhpSessionBackend();
 
 $session = new Session($backend);

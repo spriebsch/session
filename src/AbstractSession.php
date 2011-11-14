@@ -45,6 +45,9 @@ namespace spriebsch\session;
  */
 abstract class AbstractSession implements SessionInterface
 {
+    const VERSION     = '20111114';
+    const API_VERSION = '1';
+
     /**
      * @var string
      */
