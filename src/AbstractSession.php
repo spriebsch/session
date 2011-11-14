@@ -163,55 +163,6 @@ abstract class AbstractSession implements SessionInterface
     }
 
     /**
-     * Sets a session variable
-     *
-     * @param string $key Session variable name
-     * @param mixed $value Session variable value
-     * @return NULL
-     */
-    final protected function set($key, $value)
-    {
-        $this->data[$key] = $value;
-    }
-
-    /**
-     * Returns a session variable
-     *
-     * @param mixed $key Session variable name
-     * @return mixed Session variable value
-     * @throws spriebsch\session\SessionException Unknown session variable $key
-     */
-    final protected function get($key)
-    {
-        if (!$this->has($key)) {
-            throw new SessionException('Unknown session variable "' . $key . '"', SessionException::UNKNOWN_SESSION_VARIABLE);
-        }
-
-        return $this->data[$key];
-    }
-
-    /**
-     * Checks whether a session variable exists
-     *
-     * @param string $key Session variable name
-     * @return bool
-     */
-    final protected function has($key)
-    {
-        return isset($this->data[$key]);
-    }
-    
-    /**
-     * Checks whether the session has already been started
-     *
-     * @return bool
-     */
-    final public function isStarted()
-    {
-        return $this->isStarted;
-    }
-
-    /**
      * Returns the sesssion id
      *
      * @return string
@@ -264,6 +215,55 @@ abstract class AbstractSession implements SessionInterface
     {
         $this->ensureSessionIsStarted();
         $this->backend->destroy();
+    }
+
+    /**
+     * Sets a session variable
+     *
+     * @param string $key Session variable name
+     * @param mixed $value Session variable value
+     * @return NULL
+     */
+    final protected function set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
+
+    /**
+     * Checks whether a session variable exists
+     *
+     * @param string $key Session variable name
+     * @return bool
+     */
+    final protected function has($key)
+    {
+        return isset($this->data[$key]);
+    }
+
+    /**
+     * Returns a session variable
+     *
+     * @param mixed $key Session variable name
+     * @return mixed Session variable value
+     * @throws spriebsch\session\SessionException Unknown session variable $key
+     */
+    final protected function get($key)
+    {
+        if (!$this->has($key)) {
+            throw new SessionException('Unknown session variable "' . $key . '"', SessionException::UNKNOWN_SESSION_VARIABLE);
+        }
+
+        return $this->data[$key];
+    }
+
+    /**
+     * Checks whether the session has already been started
+     *
+     * @return bool
+     */
+    private function isStarted()
+    {
+        return $this->isStarted;
     }
 
     /**
