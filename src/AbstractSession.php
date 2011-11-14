@@ -272,7 +272,7 @@ abstract class AbstractSession implements SessionInterface
      * @return NULL
      * @throws spriebsch\session\SessionException
      */
-    protected function ensureSessionIsStarted()
+    private function ensureSessionIsStarted()
     {
         if (!$this->isStarted()) {
             throw new SessionException('Session has not been started', SessionException::SESSION_NOT_STARTED);
