@@ -55,7 +55,10 @@ class PhpSessionBackendTest extends PHPUnit_Framework_TestCase
      * @var spriebsch\session\SessionBackendInterface
      */
     protected $backend;
-    
+
+    /**
+     * @var string
+     */    
     protected $sessionName = 'a-session-name';
 
     /**

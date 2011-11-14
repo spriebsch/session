@@ -38,7 +38,6 @@
 namespace spriebsch\session\tests;
 
 use PHPUnit_Framework_TestCase;
-
 use spriebsch\session\tests\stubs\ConcreteSession;
 
 /**
