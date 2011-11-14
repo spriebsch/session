@@ -43,7 +43,7 @@ namespace spriebsch\session;
  * @author     Stefan Priebsch <stefan@priebsch.de>
  * @copyright  Stefan Priebsch <stefan@priebsch.de>. All rights reserved.
  */
-class PhpSessionBackend implements SessionBackendInterface
+class PHPSessionBackend implements SessionBackendInterface
 {
     /**
      * @var string

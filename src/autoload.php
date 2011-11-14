@@ -5,8 +5,7 @@ spl_autoload_register(
       if ($classes === null) {
          $classes = array(
             'spriebsch\\session\\abstractsession' => '/AbstractSession.php',
-            'spriebsch\\session\\phpsessionbackend' => '/PhpSessionBackend.php',
-            'spriebsch\\session\\session' => '/Session.php',
+            'spriebsch\\session\\phpsessionbackend' => '/PHPSessionBackend.php',
             'spriebsch\\session\\sessionbackendinterface' => '/interfaces/SessionBackendInterface.php',
             'spriebsch\\session\\sessionexception' => '/exceptions/SessionException.php',
             'spriebsch\\session\\sessioninterface' => '/interfaces/SessionInterface.php'

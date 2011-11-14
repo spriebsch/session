@@ -5,7 +5,7 @@ spl_autoload_register(
       if ($classes === null) {
          $classes = array(
             'spriebsch\\session\\tests\\abstractsessiontest' => '/AbstractSessionTest.php',
-            'spriebsch\\session\\tests\\phpsessionbackendtest' => '/PhpSessionBackendTest.php',
+            'spriebsch\\session\\tests\\phpsessionbackendtest' => '/PHPSessionBackendTest.php',
             'spriebsch\\session\\tests\\stubs\\concretesession' => '/stubs/ConcreteSession.php'
           );
       }
