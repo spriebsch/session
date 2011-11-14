@@ -87,7 +87,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     protected $value = 'a-value';
 
     /**
-     * Prepares the test fixture.
+     * Prepares the test fixture
      *
      * @return NULL
      */
@@ -98,7 +98,7 @@ class AbstractSessionTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Destroys the test fixture.
+     * Destroys the test fixture
      *
      * @return NULL
      */
