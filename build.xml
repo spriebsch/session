@@ -82,10 +82,16 @@
 
  <target name="phpab" description="Generate autoload maps using phpab">
   <exec executable="phpab">
-   <arg line="-o ${source}/autoload.php -t buildconf/phpab.template ${source}" />
+   <arg line="-o ${source}/autoload.php ${source}" />
   </exec>
   <exec executable="phpab">
-   <arg line="-o tests/autoload.php -t buildconf/phpab.template tests" />
+   <arg line="-o tests/autoload.php tests" />
+  </exec>
+ </target>
+
+ <target name="phar" description="Generate Phar archive using phpab">
+  <exec executable="phpab">
+   <arg line="-p -o ${basedir}/session.phar ${source}" />
   </exec>
  </target>
 
