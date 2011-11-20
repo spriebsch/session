@@ -1,6 +1,6 @@
 <?php
 
-require '/home/steve/projects/session/src/autoload.php';
+require __DIR__ . '/../src/autoload.php';
 
 class Session extends spriebsch\session\AbstractSession
 {
